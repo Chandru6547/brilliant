@@ -7,13 +7,14 @@ function App() {
     name: "",
     email: "",
     college: "KNRR",
-    year: 4,
+    year: "4",
     batch: "CSE-A",
     regNo: "",
     phNo: "",
   });
 
   const colleges = ["KNRR", "BRIL", "BRIG"];
+  const years = ["3", "4"];
 
   const batches = [
     "CSE-A",
@@ -30,16 +31,21 @@ function App() {
   ];
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
+      const normalizedYear = Number(formData.year);
+      const payloadBatch = normalizedYear === 3 ? "Batch-1" : formData.batch;
+
       const response = await fetch(
         "https://tssplatform.onrender.com/recreateStudentWithMail",
         {
@@ -51,8 +57,8 @@ function App() {
             name: formData.name,
             email: formData.email,
             college: formData.college,
-            year: Number(formData.year),
-            batch: formData.batch,
+            year: normalizedYear,
+            batch: payloadBatch,
             regNo: formData.regNo,
             phNo: formData.phNo,
           }),
@@ -68,7 +74,7 @@ function App() {
           name: "",
           email: "",
           college: "KNRR",
-          year: 4,
+          year: "4",
           batch: "CSE-A",
           regNo: "",
           phNo: "",
@@ -249,15 +255,22 @@ function App() {
               </div>
 
               <div className="field">
-                <label>Year</label>
-                <input type="text" value="4" disabled />
+                <label htmlFor="year">Year</label>
+                <select id="year" name="year" value={formData.year} onChange={handleChange}>
+                  {years.map((year) => (
+                    <option key={year} value={year}>
+                      {year}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
 
             <div className="row">
               <div className="field">
-                <label>Batch</label>
+                <label htmlFor="batch">Batch</label>
                 <select
+                  id="batch"
                   name="batch"
                   value={formData.batch}
                   onChange={handleChange}
