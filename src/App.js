@@ -19,6 +19,7 @@ function App() {
   const batches = [
     "CSE-A",
     "CSE-B",
+    "CSE-B",
     "CSM",
     "CSC-A",
     "CSC-B",
