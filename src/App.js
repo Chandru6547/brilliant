@@ -14,7 +14,8 @@ function App() {
   });
 
   const colleges = ["KNRR", "BRIL", "BRIG"];
-  const years = ["3", "4"];
+  // Added "2" to the years array
+  const years = ["2", "3", "4"];
 
   const batches = [
     "CSE-A",
@@ -47,7 +48,6 @@ function App() {
 
     try {
       const normalizedYear = Number(formData.year);
-      const payloadBatch = normalizedYear === 3 ? "Batch-1" : formData.batch;
 
       const response = await fetch(
         "https://tssplatform.onrender.com/recreateStudentWithMail",
@@ -61,7 +61,7 @@ function App() {
             email: formData.email,
             college: formData.college,
             year: normalizedYear,
-            batch: payloadBatch,
+            batch: formData.batch, // Sends the selected batch directly instead of overriding for year 3
             regNo: formData.regNo,
             phNo: formData.phNo,
           }),
