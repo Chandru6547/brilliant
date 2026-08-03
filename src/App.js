@@ -26,6 +26,7 @@ function App() {
     "CSC-B",
     "CSC-C",
     "CSD",
+    "CSBS",
     "AI&DS",
     "CSW",
     "ECE",
