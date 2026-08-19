@@ -13,7 +13,7 @@ function App() {
     phNo: "",
   });
 
-  const colleges = ["KNRR", "BRIL", "BRIG"];
+  const colleges = ["KNRR", "BRIL", "BRIG", "BGTI_DREAM_120"];
   // Added "2" to the years array
   const years = ["2", "3", "4"];
 
