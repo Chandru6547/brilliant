@@ -51,7 +51,7 @@ function App() {
       const normalizedYear = Number(formData.year);
 
       const response = await fetch(
-        "https://tssplatform.onrender.com/recreateStudentWithMail",
+        "https://backend.teamtechsign.in/recreateStudentWithMail",
         {
           method: "POST",
           headers: {
