@@ -13,8 +13,7 @@ function App() {
     phNo: "",
   });
 
-  const colleges = ["KNRR", "BRIL", "BRIG", "BGTI_DREAM_120"];
-  // Added "2" to the years array
+  const colleges = ["KNRR", "BRIL", "BRIG", "BGTI_DREAM_120", "BGTI-BPHARM"];
   const years = ["2", "3", "4"];
 
   const batches = [
@@ -35,8 +34,19 @@ function App() {
     "MECH",
   ];
 
+  const isBpharm = formData.college === "BGTI-BPHARM";
+
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    if (name === "college") {
+      setFormData((prev) => ({
+        ...prev,
+        college: value,
+        batch: value === "BGTI-BPHARM" ? "BPHARM" : "CSE-A",
+      }));
+      return;
+    }
 
     setFormData((prev) => ({
       ...prev,
@@ -62,7 +72,7 @@ function App() {
             email: formData.email,
             college: formData.college,
             year: normalizedYear,
-            batch: formData.batch, // Sends the selected batch directly instead of overriding for year 3
+            batch: formData.batch,
             regNo: formData.regNo,
             phNo: formData.phNo,
           }),
@@ -173,6 +183,12 @@ function App() {
           background: white;
         }
 
+        .field select:disabled {
+          background: #e2e8f0;
+          color: #475569;
+          cursor: not-allowed;
+        }
+
         .full-width {
           grid-column: span 2;
         }
@@ -253,14 +269,21 @@ function App() {
                   onChange={handleChange}
                 >
                   {colleges.map((college) => (
-                    <option key={college}>{college}</option>
+                    <option key={college} value={college}>
+                      {college}
+                    </option>
                   ))}
                 </select>
               </div>
 
               <div className="field">
                 <label htmlFor="year">Year</label>
-                <select id="year" name="year" value={formData.year} onChange={handleChange}>
+                <select
+                  id="year"
+                  name="year"
+                  value={formData.year}
+                  onChange={handleChange}
+                >
                   {years.map((year) => (
                     <option key={year} value={year}>
                       {year}
@@ -278,10 +301,17 @@ function App() {
                   name="batch"
                   value={formData.batch}
                   onChange={handleChange}
+                  disabled={isBpharm}
                 >
-                  {batches.map((batch) => (
-                    <option key={batch}>{batch}</option>
-                  ))}
+                  {isBpharm ? (
+                    <option value="BPHARM">BPHARM</option>
+                  ) : (
+                    batches.map((batch) => (
+                      <option key={batch} value={batch}>
+                        {batch}
+                      </option>
+                    ))
+                  )}
                 </select>
               </div>
 
